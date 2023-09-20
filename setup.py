@@ -4,7 +4,7 @@
 Author: ewkoll ideath@operatorwrold.com
 Date: 2023-09-18 19:40:37
 LastEditors: ewkoll
-LastEditTime: 2023-09-18 20:17:49
+LastEditTime: 2023-09-20 16:41:52
 Description: 
 Copyright (c) 2023 by ewkoll email: ideath@operatorwrold.com, All Rights Reserved.
 '''
@@ -21,7 +21,7 @@ setuptools.setup(
     description="A small koca package",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com",
+    url="https://github.com/Ewkoll/koca",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
