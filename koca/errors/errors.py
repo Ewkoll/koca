@@ -6,7 +6,7 @@
 @Email: ideath@operatorworld.com
 @License: Apache-2.0
 @Date: 2020-08-21 11:30:19
-LastEditTime: 2021-08-09 14:58:03
+LastEditTime: 2023-09-22 10:59:14
 '''
 from collections import OrderedDict
 
@@ -49,3 +49,15 @@ class NotAuthenticated(Exception):
 
     def __str__(self) -> str:
         return "User rights verification failed"
+
+
+class ConfigError(UserError):
+    '''
+    配置参数异常。
+    '''
+
+    def __str__(self, name = None) -> str:
+        if name is None:
+            return "Config error."
+        else:
+            return name + " config error."

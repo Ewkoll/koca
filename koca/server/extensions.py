@@ -11,6 +11,7 @@ Copyright (c) 2023 by ewkoll email: ideath@operatorworld.com, All Rights Reserve
 from koca.utils import CustomDict, get_logger, str_to_bool, get_real_ip
 from koca.authentication import configured_authenticator
 from flask_restful import Api
+from koca.errors import ConfigError
 from koca.logger import configured_request_log_handlers
 from koca.logger import AsyncRequestLogger, RequestLogger
 from flask import g, current_app, request
@@ -18,6 +19,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+import socket
+import os
+import nacos
 
 def store_option(config, option, default):
     """
@@ -227,3 +231,33 @@ def register_blueprint(app, config):
     from .index import main
 
     app.register_blueprint(main)
+
+
+def get_interface_ip(family: socket.AddressFamily) -> str:
+    host = "fd31:f903:5ab5:1::1" if family == socket.AF_INET6 else "10.253.155.219"
+    with socket.socket(family, socket.SOCK_DGRAM) as s:
+        try:
+            s.connect((host, 58162))
+        except OSError:
+            return "::1" if family == socket.AF_INET6 else "127.0.0.1"
+        return s.getsockname()[0]
+
+def register_nacos(app, config):
+    """
+    @description: 注册Nacos
+    @return:
+    """
+    if config.NACOS is None:
+        return
+
+    address = config.NACOS.SERVER_ADDRESSES
+    namespace = config.NACOS.NAMESPACE or "public"
+    appname = config.NACOS.REGISTER_NACOS_NAME or app.name()
+    port = os.getenv('FLASK_RUN_PORT')
+    if address is None or port is None:
+        raise ConfigError("Nacos")
+    
+    
+    client = nacos.NacosClient(address, namespace=namespace)
+    display_hostname = get_interface_ip(socket.AF_INET)
+    client.add_naming_instance(appname, display_hostname, port)
