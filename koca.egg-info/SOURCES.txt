@@ -9,7 +9,6 @@ koca.egg-info/top_level.txt
 koca/authentication/__init__.py
 koca/authentication/auth.py
 koca/errors/__init__.py
-koca/errors/business_errors.py
 koca/errors/errors.py
 koca/errors/http_errors.py
 koca/extend/__init__.py

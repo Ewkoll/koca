@@ -188,7 +188,7 @@ def register_extensions(app, config):
     @return:
     """
     db.init_app(app)
-    app.db = db
+    app.koca.db = db
 
     def error_router(self, original_handler, e):
         """This function decides whether the error occured in a flask-restful
@@ -216,11 +216,12 @@ def register_extensions(app, config):
 
     Api.error_router = error_router
     api = Api(app)
+    app.koca.api = api
     
     # 注册接口请求。
     from .api import api_bp
 
-    app.register_blueprint(api_bp)
+    app.register_blueprint(api_bp, url_prefix=config.UrlPrefix, config=config)
 
 
 def register_blueprint(app, config):

@@ -12,7 +12,7 @@ from flask import Flask
 from koca.loader import initialize_bex
 from koca.utils import builtin_load_module
 from koca.server.x_app_error_handle import init_app_error_handle
-from koca.server.extensions import db, initialize_app
+from koca.server.extensions import db, initialize_app, register_nacos
 from koca.server.extensions import register_blueprint, register_global_handle
 from koca.server.extensions import register_extensions, register_logger, register_commands
 
@@ -40,6 +40,7 @@ def create_app(config):
     register_logger(app, config)
     register_commands(app, config)
     register_blueprint(app, config)
+    register_nacos(app, config)
     load_api_package(app, config)
     return app
 
