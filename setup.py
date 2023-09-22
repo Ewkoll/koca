@@ -4,7 +4,7 @@
 Author: ewkoll ideath@operatorwrold.com
 Date: 2023-09-18 19:40:37
 LastEditors: ewkoll
-LastEditTime: 2023-09-20 16:41:52
+LastEditTime: 2023-09-22 17:21:13
 Description: 
 Copyright (c) 2023 by ewkoll email: ideath@operatorwrold.com, All Rights Reserved.
 '''
@@ -15,7 +15,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="koca",
-    version="0.0.1",
+    version="0.0.2",
     author="ewkoll",
     author_email="ideath@operatorworld.com",
     description="A small koca package",
