@@ -50,7 +50,7 @@ def random_font():
 @return: 
 """
 try:
-    from verify_code.captcha import *
+    from koca.verify_code.captcha import *
 except:
     print("verification code module load failed...")
 

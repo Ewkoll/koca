@@ -221,7 +221,8 @@ def register_extensions(app, config):
     # 注册接口请求。
     from .api import api_bp
 
-    app.register_blueprint(api_bp, url_prefix=config.UrlPrefix, config=config)
+    url_prefix = config.URL_PREFIX
+    app.register_blueprint(api_bp, url_prefix=url_prefix, config=config)
 
 
 def register_blueprint(app, config):
