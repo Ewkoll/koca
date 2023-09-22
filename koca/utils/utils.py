@@ -6,7 +6,7 @@
 @Email: ideath@operatorworld.com
 @License: Apache-2.0
 @Date: 2020-08-21 11:29:55
-LastEditTime: 2023-09-18 16:37:53
+LastEditTime: 2023-09-22 14:17:02
 '''
 from flask import Response, request, g, make_response
 from zlib import crc32
@@ -102,14 +102,36 @@ def dir_path(path, callback):
     @description: 目录遍历
     @return:
     '''
-    try:
-        ls = os.listdir(path)
-    except Exception as exception:
-        print(exception)
-    else:
-        if isinstance(callback, FunctionType):
-            for file in ls:
+    ls = os.listdir(path)
+    if isinstance(callback, FunctionType):
+        for file in ls:
+            file_path = os.path.join(path, file)
+            if os.path.isfile(file_path):
                 callback(path, file)
+            elif os.path.isdir(file_path):
+                dir_path(file_path, callback)
+
+
+def load_path_pyfile(path, file):
+    '''
+    @description: 加载指定目录文件
+    @return:
+    '''
+    if file != '__init__.py' and file.endswith(".py"):
+        pos = file.rfind('.')
+        if pos != -1:
+            file = file[0:len(file) - pos]
+            path = path.replace('\\', '.')
+            path = path.replace('/', '.')
+            __import__(path + '.' + file)
+    
+
+def load_path(path):
+    '''
+    @description: 加载指定目录文件
+    @return:
+    '''
+    dir_path(path, callback=load_path_pyfile)
 
 
 def move_file(srcfile, dstfile):

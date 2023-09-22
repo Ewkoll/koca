@@ -10,7 +10,7 @@ Copyright (c) 2023 by ewkoll email: ideath@operatorworld.com, All Rights Reserve
 """
 from flask import Flask
 from koca.loader import initialize_bex
-from koca.utils import builtin_load_module
+from koca.utils import builtin_load_module, load_path
 from koca.server.x_app_error_handle import init_app_error_handle
 from koca.server.extensions import db, initialize_app, register_nacos
 from koca.server.extensions import register_blueprint, register_global_handle
@@ -46,4 +46,9 @@ def create_app(config):
 
 
 def load_api_package(app, config):
-    builtin_load_module(config.API_PACKAGE_NAME or 'business')
+    path = config.API_PACKAGE_NAME or 'business'
+    try:
+        builtin_load_module(path)
+    except Exception as e:
+        print("包模式加载失败，尝试直接导入文件")
+        load_path(path)
