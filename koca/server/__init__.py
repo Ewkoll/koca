@@ -46,9 +46,7 @@ def create_app(config):
 
 
 def load_api_package(app, config):
-    path = config.API_PACKAGE_NAME or 'business'
-    try:
-        builtin_load_module(path)
-    except Exception as e:
-        print("包模式加载失败，尝试直接导入文件")
-        load_path(path)
+    if config.API_PACKAGE_NAME is None:
+        load_path(config.API_PATH_NAME or "business")
+    else:
+        builtin_load_module(config.API_PACKAGE_NAME)
