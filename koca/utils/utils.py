@@ -6,7 +6,7 @@
 @Email: ideath@operatorworld.com
 @License: Apache-2.0
 @Date: 2020-08-21 11:29:55
-LastEditTime: 2023-09-22 14:17:02
+LastEditTime: 2023-10-12 14:46:44
 '''
 from flask import Response, request, g, make_response
 from zlib import crc32
@@ -120,7 +120,7 @@ def load_path_pyfile(path, file):
     if file != '__init__.py' and file.endswith(".py"):
         pos = file.rfind('.')
         if pos != -1:
-            file = file[0:len(file) - pos]
+            file = file[0:pos]
             path = path.replace('\\', '.')
             path = path.replace('/', '.')
             __import__(path + '.' + file)
