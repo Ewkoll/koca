@@ -262,6 +262,5 @@ def register_nacos(app, config):
     
     client = nacos.NacosClient(address, namespace=namespace)
     display_hostname = get_interface_ip(socket.AF_INET)
-    client.add_naming_instance(appname, display_hostname, port)
+    client.add_naming_instance(appname, display_hostname, port, ephemeral=False)
     app.koca.nacos_client = client
-    
